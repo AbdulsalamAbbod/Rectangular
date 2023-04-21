@@ -5,8 +5,8 @@ Compatible with hardware version 2.6v
 **do not go to sleep at receive mode**
 last hardware upgrade: add more resistor => 35.2Ω
 
-©Abdulsalam Abbod
-2022 june 18
+©Abdulsalam Abbod - 2022 june 18
+mail : abdulsalamabbod@gmail.com
 
 Libraries versions that compatible:
 Adafruit GFX 1.1v
