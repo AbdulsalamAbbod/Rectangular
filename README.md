@@ -11,7 +11,7 @@ RectangulaR lite software version 1.99v
 
 2022 june 18
 
-**You Must Use These Libraries To Make Make Sure It Works Properly**
+**You Must Use These Libraries To Make Sure It Works Properly**
 
 ### Libraries versions that compatible :-
 
