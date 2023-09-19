@@ -4,7 +4,7 @@ RectangulaR is a hacking device that has the capability to hack any device suppo
 RectangulaR lite software version 1.99v
 
 
-Notice that RectangulaR has two versions, one for Analog Buttons and the other for Digital Buttons (Recommended) 
+**Notice that RectangulaR has two versions, one for Analog Buttons and the other for Digital Buttons (Recommended)**
 
 
 ©Abdulsalam Abbod
