@@ -214,6 +214,7 @@ void setup() {
     pinMode(UpButtonPin, INPUT);
     pinMode(DownButtonPin, INPUT);
     pinMode(OkButtonPin, INPUT);
+    
     digitalWrite(power, HIGH);  
     digitalWrite(ResetPin, LOW);
     
@@ -303,7 +304,7 @@ void MainMenu() {
         }
 
 
-        if(IsButtonPressed(OkButton) && (wait-PreviousTime2) > 600) {
+        if(IsButtonPressed(OkButtonPin) && (wait-PreviousTime2) > 600) {
 
             switch(CurrentMode) {
                 case 1:
@@ -488,7 +489,7 @@ void SendingPage() {
         }
 
         // deselect the code if 'ok' pressed
-        if(IsButtonPressed(OkButton) && ((CurrentTime-PreviousTime0) > 600) && IsSelected) {
+        if(IsButtonPressed(OkButtonPin) && ((CurrentTime-PreviousTime0) > 600) && IsSelected) {
             AutoSend = false;
             display.clearDisplay();
             IsSelected = false;
@@ -522,7 +523,7 @@ void SendingPage() {
         display.println(F(" bit"));
 
         // selecting the code to transmit it
-        if(IsButtonPressed(OkButton) && ((CurrentTime-PreviousTime0) > 600)) {
+        if(IsButtonPressed(OkButtonPin) && ((CurrentTime-PreviousTime0) > 600)) {
             display.fillCircle(lx[Column]+51, ly[Row-1]+5, 3, WHITE);
             display.display();
             IsSelected = true;
@@ -530,7 +531,7 @@ void SendingPage() {
         }
         
        // Send "code" if Up Button is pressed
-        if((IsButtonPressed(UpButton)) && (IsSelected)) {
+        if((IsButtonPressed(UpButtonPin)) && (IsSelected)) {
             IRsend.sendNEC(ReceivedData[Code_Position], 32);
             delay(50);
             IRsend.sendNEC(ReceivedData[Code_Position], code_bits[Code_Position]);
@@ -544,7 +545,7 @@ void SendingPage() {
 
         /**************************************/
         // enable auto-send if Down Button is pressed
-        if(IsButtonPressed(DownButton) && (IsSelected)) {
+        if(IsButtonPressed(DownButtonPin) && (IsSelected)) {
             AutoSend = true;
         }
         // sending code automatically
@@ -624,7 +625,7 @@ void ManagePage() {
         SleepTime = millis();
         unsigned long CurrentTime = millis();
         Debugging();
-        ReadTheButtonValue();
+      //  ReadTheButtonValue();
         ReadHomeButtonState();
         
         if(!IsSelected)
@@ -651,11 +652,11 @@ void ManagePage() {
         
        if(IsSelected && (CurrentTime-PreviousTime0>300)){
         
-           if(IsButtonPressed(UpButton)){
+           if(IsButtonPressed(UpButtonPin)){
             File++; PreviousTime0 = CurrentTime;
            }
         
-           else if(IsButtonPressed(DownButton)){
+           else if(IsButtonPressed(DownButtonPin)){
             File--;  PreviousTime0 = CurrentTime;
            }
         
@@ -664,14 +665,14 @@ void ManagePage() {
 
         
         // select file to Import
-          if(IsButtonPressed(OkButton)&&CurrentMode==2 && !IsSelected && (CurrentTime-PreviousTime0>700)){
+          if(IsButtonPressed(OkButtonPin)&&CurrentMode==2 && !IsSelected && (CurrentTime-PreviousTime0>700)){
             IsSelected = true;
             PreviousTime0 = CurrentTime;
            }
        
         
 
-         if(IsButtonPressed(OkButton) && ((CurrentTime-PreviousTime0) > 700)) {
+         if(IsButtonPressed(OkButtonPin) && ((CurrentTime-PreviousTime0) > 700)) {
             PreviousTime0 = CurrentTime;
             
             switch(CurrentMode) {
@@ -773,7 +774,7 @@ void SelectMode(byte &CurrentMode, unsigned long &CurrentTime) {
     ReadTheButtonValue();
 
     // Go Up    use 437 analog value => 0
-    if(IsButtonPressed(UpButton) && ((CurrentTime-PreviousTime0) > ScrollingSpeed)) {
+    if(IsButtonPressed(UpButtonPin) && ((CurrentTime-PreviousTime0) > ScrollingSpeed)) {
         CurrentMode--;
         display.clearDisplay();
         PreviousTime0 = CurrentTime;
@@ -781,7 +782,7 @@ void SelectMode(byte &CurrentMode, unsigned long &CurrentTime) {
     }
 
     // Go Down   use 512 analog value => 2
-    else if((IsButtonPressed(DownButton) && ((CurrentTime-PreviousTime0) > ScrollingSpeed))) {
+    else if((IsButtonPressed(DownButtonPin) && ((CurrentTime-PreviousTime0) > ScrollingSpeed))) {
         CurrentMode++;
         display.clearDisplay();
         PreviousTime0 = CurrentTime;
@@ -818,8 +819,9 @@ void WakeUp() {
     digitalWrite(ResetPin, LOW);
 }
 
-bool IsButtonPressed(bool ButtonState_) {
-    ReadTheButtonValue();
+bool IsButtonPressed(byte ButtonPin_) {
+    
+   bool ButtonState_ = digitalRead(ButtonPin_);
     return ButtonState_;
 }
 
@@ -840,6 +842,7 @@ void ResetSleepingTime(){
 
 
 void ReadTheButtonValue() {
+    
       ResetButton = digitalRead(ResetPin);
       UpButton = digitalRead(UpButtonPin);
       DownButton = digitalRead(DownButtonPin);
