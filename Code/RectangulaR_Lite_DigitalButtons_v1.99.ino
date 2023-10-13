@@ -211,6 +211,9 @@ void setup() {
     pinMode(WiFiEnablePin, OUTPUT);
     pinMode(indicator, OUTPUT);
     pinMode(ResetPin, OUTPUT);
+    pinMode(UpButtonPin, INPUT);
+    pinMode(DownButtonPin, INPUT);
+    pinMode(OkButtonPin, INPUT);
     digitalWrite(power, HIGH);  
     digitalWrite(ResetPin, LOW);
     
